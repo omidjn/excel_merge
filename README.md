@@ -1,6 +1,8 @@
 # Getting Started
 
+```bash
 copy all excel files to "~/Documents/files"
+```
 
 ## install packages
 
