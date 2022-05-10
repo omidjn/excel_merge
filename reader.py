@@ -5,16 +5,18 @@ import os
 
 all_data = []
 
-def read(loc):
+def read(loc, factor):
     wb_obj = openpyxl.load_workbook(loc)
     sheet = wb_obj.active
     data = []
 
     rows = list(sheet.rows)
-    factor_num = (int(unidecode(str(rows[0][14].value).split("-")[0])))
+    factor_num = None
+    if rows[0][14].value != None:
+        factor_num = (int(unidecode(str(rows[0][14].value).split("-")[0])))
     rows = rows[5:]
 
-    if factor_num in factor_nums:
+    if factor_num in factor:
 
         for row in rows:
             r = [x.value if x.value != None else '' for x in row]
@@ -48,9 +50,8 @@ factor_nums = read_main(dir + 'main.xlsx')
 
 for i in files:
     if i.endswith(".xlsx"):
-        d = read(os.path.join(file_dir, i))
+        d = read(os.path.join(file_dir, i), factor_nums)
         if d != None:
-            print(all_data)
             all_data.append(d)
 
 
