@@ -8,7 +8,7 @@ copy all excel files to "~/Documents/files/Factors"
 ## install packages
 
 ```bash
-pip install openpyxl xlsxwriter
+pip install openpyxl xlsxwriter Unidecode
 ```
 
 ## run

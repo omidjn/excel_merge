@@ -48,9 +48,14 @@ files = os.listdir(file_dir)
 
 factor_nums = read_main(dir + 'main.xlsx')
 
+all_lenght = len(files)
+n = 1
+
 for i in files:
     if i.endswith(".xlsx"):
         d = read(os.path.join(file_dir, i), factor_nums)
+        print(n, "/", all_lenght)
+        n += 1
         if d != None:
             all_data.append(d)
 
