@@ -1,7 +1,8 @@
 # Getting Started
 
 ```bash
-copy all excel files to "~/Documents/files"
+copy main files to "~/Documents/files/"
+copy all excel files to "~/Documents/files/Factors"
 ```
 
 ## install packages
