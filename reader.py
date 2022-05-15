@@ -5,7 +5,10 @@ import os
 
 all_data = []
 
-def read(loc, factor):
+facnum = 1
+
+def read(loc, factor, n):
+    global facnum
     wb_obj = openpyxl.load_workbook(loc)
     sheet = wb_obj.active
     data = []
@@ -17,10 +20,11 @@ def read(loc, factor):
     rows = rows[5:]
 
     if factor_num in factor:
-
+        facnum +=1
         for row in rows:
             r = [x.value if x.value != None else '' for x in row]
             del r[0]
+            r.append(facnum)
             data.append(r)
             
         return data
@@ -44,7 +48,7 @@ home = os.path.expanduser('~')
 dir = os.path.join(home, 'Documents/files/')
 file_dir = os.path.join(dir, "Factors/")
 
-files = os.listdir(file_dir)
+files = os.listdir(file_dir)[0:100]
 
 factor_nums = read_main(dir + 'main.xlsx')
 
@@ -56,7 +60,7 @@ for i in files:
         print(n, "/", all_lenght)
         n += 1
         try:
-            d = read(os.path.join(file_dir, i), factor_nums)
+            d = read(os.path.join(file_dir, i), factor_nums, n)
             if d != None:
                 all_data.append(d)
         except:
