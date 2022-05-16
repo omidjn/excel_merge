@@ -48,7 +48,7 @@ home = os.path.expanduser('~')
 dir = os.path.join(home, 'Documents/files/')
 file_dir = os.path.join(dir, "Factors/")
 
-files = os.listdir(file_dir)[0:100]
+files = os.listdir(file_dir)
 
 factor_nums = read_main(dir + 'main.xlsx')
 
