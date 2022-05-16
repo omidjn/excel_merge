@@ -7,24 +7,13 @@ all_data = []
 
 facnum = 1
 
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
-    """
-    Call in a loop to create terminal progress bar
-    @params:
-        iteration   - Required  : current iteration (Int)
-        total       - Required  : total iterations (Int)
-        prefix      - Optional  : prefix string (Str)
-        suffix      - Optional  : suffix string (Str)
-        decimals    - Optional  : positive number of decimals in percent complete (Int)
-        length      - Optional  : character length of bar (Int)
-        fill        - Optional  : bar fill character (Str)
-        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
-    """
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, printEnd = "\r"):
+    fill = '█'
+    length = 50
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
-    # Print New Line on Complete
+    print(f'\r{prefix} {bar} {percent}% {suffix}', end = printEnd)
     if iteration == total: 
         print()
 
@@ -73,22 +62,21 @@ files = os.listdir(file_dir)
 
 factor_nums = read_main(dir + 'main.xlsx')
 
-all_lenght = len(files)
+length = len(files)
 n = 1
 
-printProgressBar(0, all_lenght, prefix = 'Progress:', suffix = 'Complete', length = 50)
+printProgressBar(0, length, prefix = 'Progress:', suffix = 'Complete', printEnd='')
 
 for i in files:
+    n += 1
     if i.endswith(".xlsx"):
-        # print(n, "/", all_lenght)
-        printProgressBar(n + 1, all_lenght, prefix = 'Progress:', suffix = 'Complete', length = 50)
-        n += 1
         try:
             d = read(os.path.join(file_dir, i), factor_nums, n)
             if d != None:
                 all_data.append(d)
         except:
             pass
+    printProgressBar(n-1, length, prefix = 'Progress:', suffix = 'Complete')
 
 
 workbook = xlsxwriter.Workbook(os.path.join(dir, 'all.xlsx'))
@@ -102,9 +90,10 @@ for i in all_data:
         column = 0
         for x in j:
             worksheet.write(row, column, x)
-            print(x, row, column)
+            print("\r" + "writing cell: " + str(row) + " " + str(column), end='')
             column += 1
         row += 1
 
 workbook.close()
-print("done")
+
+print("\ndone")
